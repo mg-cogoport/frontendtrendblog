@@ -1,5 +1,5 @@
 // import { useRouter } from "next/router";
-import { Route, Link, Routes, useParams } from "react-router-dom";
+import { Route, Link, Routes, useParams, useNavigate } from "react-router-dom";
 import axios from 'axios'
 import React, { useEffect, useState } from "react";
 import { useAuth } from './auth';
@@ -11,6 +11,7 @@ const User = () => {
 //   const  user  = router.query.profile;
     const params = useParams();
   const user = params.id;
+  const navigate = useNavigate()
   const [userData, setUserData] = useState(null);
   const [userId, setId] = useState();
   const [post, setPost] = useState([])
@@ -54,7 +55,11 @@ const User = () => {
     console.log(responseJSON.error);
     // if (responseJSON)
     if (responseJSON) {
-        
+        for (let i = 0; i < responseJSON.length; i++) {
+            if (responseJSON[i].image) {
+                responseJSON[i].image = JSON.parse(responseJSON[i].image)
+            }
+        }
         setPost(responseJSON);
     }
 };
@@ -68,20 +73,14 @@ const User = () => {
     // }, 1000);
     // return () => clearTimeout(timer);
   }, []);
+  const edit = (id) => {
+    navigate(`/updatepost/${id}`)
+  }
   return (
     <>
     <Navbar />
-    <h1>My Post</h1>
-    {
-        post.length > 0 && (
-            post.map((val)=>{
-                return (<>
-                <h1>{val.title}</h1>
-                </>)
-            })
-        )
-    }
-      {userData ? (
+    <div style={{marginTop:"50px", marginBottom: "500px"}}>
+    {userData ? (
         <div class="card">
             {userData.image && <img src={userData.image.base64} alt="John" style={{width:"100%"}} />}
             
@@ -99,6 +98,52 @@ const User = () => {
            : (
         "Loading..."
       )}
+      </div>
+    <h1 style={{marginLeft:"40px"}}>My Post</h1>
+    {
+        post.length > 0 && (
+            post.map((m, i) => {
+                if (post.length === i + 1) {
+                  return (
+                    <div className="home-article">
+                        <div className="home-article-img">
+                            {m.image && <img src={m.image.base64} alt="article" />}
+                            
+                        </div>
+                        <div className="home-article-content font1">
+                            <a href="/blogpost.html">
+                                <h3>{m.title}</h3>
+                            </a>
+
+                            <div>{m.user_name.first_name}</div>
+                            <span>07 January | 6 min read</span>
+                            <p className="editClass" onClick={()=>{edit(m.id)}}>Edit</p>
+                        </div>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div  className="home-article">
+                    <div className="home-article-img">
+                    {m.image && <img src={m.image.base64} alt="article" />}
+                    </div>
+                    <div className="home-article-content font1">
+                        <a href="/blogpost.html">
+                            <h3>{m.title}</h3>
+                        </a>
+                        <div>{m.user_name.first_name}</div>
+                        <span>07 January | 6 min read</span>
+                        <p className="editClass" onClick={()=>{edit(m.id)}}>Edit</p>
+                    </div>
+                </div>
+              
+                  );
+                }
+              }
+        )
+        )
+    }
+      
       <div style={{position:"fixed", bottom:"0px", width:"100%"}}>
       <Footer />
       </div>

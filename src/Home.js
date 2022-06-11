@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import UseBlog from "./UseBlog";
 import { useJwt } from "react-jwt";
 import { useAuth } from "./auth";
+import { useNavigate } from "react-router-dom";
 function Home() {
     const auth = useAuth()
     const isAuthenticateUser =  () => {
@@ -33,6 +34,7 @@ function Home() {
     const { loading, blog, hasMore } = UseBlog(searchValue, pageNumber);
     const observer = useRef();
     const userId = 1
+    const navigate = useNavigate()
     const lastBlogRef = useCallback(
         (node) => {
         if (loading) return;
@@ -51,6 +53,10 @@ function Home() {
     function handleChange(e) {
         setSearchValue(e.target.value);
         setPageNumber(1);
+    }
+    const chageRoute = (id) => {
+        console.log("okkkkklkjklhjgkjhasgdhf");
+        navigate(`/blog/${id}`)
     }
   return (
     <>
@@ -93,15 +99,17 @@ function Home() {
                   return (
                     <div ref={lastBlogRef} className="home-article">
                         <div className="home-article-img">
-                            <img src="../assets/img/3.png" alt="article" />
+                            {m.image && <img src={m.image.base64} alt="article" />}
+                            
                         </div>
                         <div className="home-article-content font1">
                             <a href="/blogpost.html">
                                 <h3>{m.title}</h3>
                             </a>
 
-                            <div>Author Name</div>
+                            <div>{m.user_name.first_name}</div>
                             <span>07 January | 6 min read</span>
+                            <p onClick={()=>chageRoute(m.id)}>Read More.....</p>
                         </div>
                     </div>
                   );
@@ -109,14 +117,15 @@ function Home() {
                   return (
                     <div  className="home-article">
                     <div className="home-article-img">
-                        <img src="../assets/img/3.png" alt="article" />
+                    {m.image && <img src={m.image.base64} alt="article" />}
                     </div>
                     <div className="home-article-content font1">
                         <a href="/blogpost.html">
                             <h3>{m.title}</h3>
                         </a>
-                        <div>Author Name</div>
+                        <div>{m.user_name.first_name}</div>
                         <span>07 January | 6 min read</span>
+                        <p onClick={()=>chageRoute(m.id)}>Read More.....</p>
                     </div>
                 </div>
               

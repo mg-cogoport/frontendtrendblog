@@ -76,7 +76,7 @@ function Blogs() {
         <div class="m-auto content max-width-1 my-2" style={{pointerEvents: "auto !important"}}>
         {/* <button onClick={chageRoute}>Read More....</button> */}
         <div class="home-articles max-width-1 m-auto font2" style={{pointerEvents: "auto !important"}}>
-        <h2>Featured Articles</h2>
+        <h2>Featured Articless</h2>
         {blog.length > 0 ? 
         (  <>
             {blog.map((m, i) => {
@@ -89,7 +89,7 @@ function Blogs() {
                         </div>
                         <div className="home-article-content font1">
                                 <h3>{m.title}</h3>
-                            <div>Author Name</div>
+                            <div>{m.user_name.first_name}</div>
                             <span>07 January | 6 min read</span>
                             <p onClick={()=>chageRoute(m.id)}>Read More.....</p>
                         </div>
@@ -104,8 +104,8 @@ function Blogs() {
                         <img src={m.image.base64} alt="article" />
                     </div>
                     <div className="home-article-content font1">
-                            <h3>{m.title}</h3>
-                        <div>Author Name</div>
+                            <h3>{m.title}j</h3>
+                        <div>{m.user_name.first_name}</div>
                         <span>07 January | 6 min read</span>
                         <p onClick={()=>chageRoute(m.id)}>Read More.....</p>
                     </div>

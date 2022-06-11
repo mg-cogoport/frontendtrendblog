@@ -7,6 +7,7 @@ import { useJwt } from "react-jwt";
 import Navbar from './Navbar';
 import Footer from './Footer';
 import FileBase from 'react-file-base64'
+import { EditorState } from 'draft-js'
 function CreatePost() {
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")

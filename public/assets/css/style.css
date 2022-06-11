@@ -185,3 +185,7 @@
   border: 2px solid #bd6418 !important;
   border-radius: 5px;
 }
+.editClass{
+  cursor: pointer;
+  text-decoration: underline;
+}
