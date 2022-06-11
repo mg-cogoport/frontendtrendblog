@@ -13,11 +13,10 @@ const User = () => {
   const user = params.id;
   const [userData, setUserData] = useState(null);
   const [userId, setId] = useState();
+  const [post, setPost] = useState([])
   const auth =  useAuth()
   const { decodedToken, isExpired } = useJwt(localStorage.getItem("token"));
   console.log(decodedToken, "dec");
-//   const user_id = decodedToken?.user_id
-//   const [liked, setLiked] = useState(false);
             const getBlogRequest = async () => {
             console.log(user);
             const url = `http://0.0.0.0:3000/user/${user}`;
@@ -39,35 +38,49 @@ const User = () => {
                 setUserData(responseJSON);
             }
   };
-//   const addMovie = (id) => {
-//       axios({
-//         method:'PUT',
-//         url : `http://0.0.0.0:8000/movies/${id}`,
-//         params: {isliked:!liked},
-//         headers:{
-//             'Content-Type': 'application/json',
-//             'Access-Control-Allow-Origin' : '*'
-//         }
+  const getPost = async () => {
+    console.log(user, "checkkkkkkkkkkkkk");
+    const url = `http://0.0.0.0:3000/userpost/${user}`;
+    const response = await fetch(url, {
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': `Bearer ${auth.user}`
+        }
+    }).catch((error)=> {
+        console.log("error", error)
+        // throw error
+    })
+    const responseJSON = await response.json();
+    console.log(responseJSON.error);
+    // if (responseJSON)
+    if (responseJSON) {
         
-//     }).then((data)=>{
-//       console.log(data, "liked");
+        setPost(responseJSON);
+    }
+};
 
-//     }).catch(err=>console.log(err))
-//     getMovieRequest(id);
-//     setLiked(!liked)
-//   };
   useEffect(() => {
-    //   console.log;
-    const timer = setTimeout(() => {
-      console.log("This will run after 1 second!");
+    // const timer = setTimeout(() => {
+    //   console.log("This will run after 1 second!");
+    getPost();
       getBlogRequest();
-      console.log(userData, "dddd");
-    }, 1000);
-    return () => clearTimeout(timer);
+    //   console.log(userData, "dddd");
+    // }, 1000);
+    // return () => clearTimeout(timer);
   }, []);
   return (
     <>
     <Navbar />
+    <h1>My Post</h1>
+    {
+        post.length > 0 && (
+            post.map((val)=>{
+                return (<>
+                <h1>{val.title}</h1>
+                </>)
+            })
+        )
+    }
       {userData ? (
         <div class="card">
             {userData.image && <img src={userData.image.base64} alt="John" style={{width:"100%"}} />}

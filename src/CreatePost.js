@@ -84,7 +84,7 @@ function CreatePost() {
     <form onSubmit={submit} style={{marginTop: "40px"}}>
     <div class="contact-content font1 max-width-1 m-auto">
         <div class="max-width-1 m-auto mx-1">
-            <h2>Feel Free to Contact Us</h2>
+            <h2>Create Your Own Blog</h2>
             <div class="contact-form">
                 <div class="form-box">
                     <input type="text" placeholder="Enter Title" value={title} onChange={(e)=>setTitle(e.target.value)}/>
@@ -97,19 +97,20 @@ function CreatePost() {
                     />
                     {/* <input type="file" placeholder="Enter Image" value={image} onChange={(e)=>setImage(e.target.value)} /> */}
                 </div>
-                {image && <img src={image.base64} alt="okk"></img>}
                 
-                <div class="form-box">
-                    <textarea name="" id="" cols="30" rows="10" placeholder="Enter Contenent" value={content} onChange={(e)=>setContent(e.target.value)}></textarea>
-                </div>
                 <MultiSelect 
                     options={options}
                     value={selected}
                     onChange={setSelected}
                     labelledBy="Select"
+                    className="formss"
                 />
-                
                 <div class="form-box">
+                    <textarea name="" id="" cols="30" rows="10" placeholder="Enter Contenent" value={content} onChange={(e)=>setContent(e.target.value)}></textarea>
+                </div>
+                
+                
+                <div class="form-box" style={{marginTop:"50px", marginBottom:"40px"}}>
                     <button class="btn" type='submit'>Submit</button>
                 </div>
 

@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0; 
+  pointer-events: auto !important;
 }
 
 .navigation {
@@ -62,6 +63,8 @@
   height: inherit;
   opacity: 0.15;
   border-radius: 12px;
+  pointer-events: auto;
+  z-index: -1;
 }
 
 .content-left {
@@ -163,3 +166,22 @@
 }
 
 
+.click{
+  /* border: 1px solid red; */
+  cursor: pointer;
+}
+.click:hover{
+  /* text-decoration: underline; */
+}
+.formss{
+  /* width: 70%; */
+  border-color: #bd6418 !important;
+  z-index: 100;
+  width: 53vw !important;
+  /* padding: 0px 6px; */
+  /* margin: 7px 0; */
+  font-size: 18px;
+  font-family: var(--font1);
+  border: 2px solid #bd6418 !important;
+  border-radius: 5px;
+}

@@ -4,8 +4,10 @@ import Navbar from "./Navbar";
 import UseBlog from "./UseBlog";
 import { useJwt } from "react-jwt";
 import { useAuth } from "./auth";
+import { Link, Navigate, useNavigate, NavLink } from "react-router-dom";
 function Blogs() {
     const auth = useAuth()
+    const navigate = useNavigate()
     const isAuthenticateUser =  () => {
         const token = localStorage.getItem('token')
         const url = `http://0.0.0.0:3000/check`;
@@ -52,6 +54,10 @@ function Blogs() {
         setSearchValue(e.target.value);
         setPageNumber(1);
     }
+    const chageRoute = (id) => {
+        console.log("okkkkklkjklhjgkjhasgdhf");
+        navigate(`/blog/${id}`)
+    }
   return (
     <>
     <div className="navBar">
@@ -67,51 +73,47 @@ function Blogs() {
        </nav>
     </div>
        
-        <div class="m-auto content max-width-1 my-2">
-           
-
-
-
-        <div class="home-articles max-width-1 m-auto font2">
+        <div class="m-auto content max-width-1 my-2" style={{pointerEvents: "auto !important"}}>
+        {/* <button onClick={chageRoute}>Read More....</button> */}
+        <div class="home-articles max-width-1 m-auto font2" style={{pointerEvents: "auto !important"}}>
         <h2>Featured Articles</h2>
-
         {blog.length > 0 ? 
         (  <>
             {blog.map((m, i) => {
                 if (blog.length === i + 1) {
                   return (
-                    <div ref={lastBlogRef} className="home-article">
+                    //   <Link to={`/blog/m.id`}> 
+                    <div ref={lastBlogRef} className="home-article click" >
                         <div className="home-article-img">
                             <img src={m.image.base64} alt="article" />
                         </div>
                         <div className="home-article-content font1">
-                            <a href="/blogpost.html">
                                 <h3>{m.title}</h3>
-                            </a>
-
                             <div>Author Name</div>
                             <span>07 January | 6 min read</span>
+                            <p onClick={()=>chageRoute(m.id)}>Read More.....</p>
                         </div>
                     </div>
+                    // </Link>
                   );
                 } else {
                   return (
-                    <div  className="home-article">
+                    // <Link to={`/blog/m.id`}> 
+                    <div  className="home-article click">
                     <div className="home-article-img">
                         <img src={m.image.base64} alt="article" />
                     </div>
                     <div className="home-article-content font1">
-                        <a href="/blogpost.html">
                             <h3>{m.title}</h3>
-                        </a>
                         <div>Author Name</div>
                         <span>07 January | 6 min read</span>
+                        <p onClick={()=>chageRoute(m.id)}>Read More.....</p>
                     </div>
                 </div>
-              
-                  );
-                }
-              })}
+            //   </Link>
+            );
+        }
+    })}
             </>
 
         ) : "No Blogs found"}
